@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Drum</title>
+</head>
+<body>
+    <div class="keys">
+        <div data-key="65" class="key" onclick="playS(65);">
+            <center><kbd>A</kbd></center>
+            <center><span class="sound">Bass</span></center>
+        </div>
+        <div data-key="83" class="key"onclick="playS(83);">
+            <center><kbd>S</kbd></center>
+            <center><span class="sound">Bass2</span></center>
+        </div>
+        <div data-key="68" class="key"onclick="playS(68);">
+            <center><kbd>D</kbd></center>
+            <center><span class="sound">Clap</span></center>
+        </div>
+        <div data-key="70" class="key"onclick="playS(70);">
+            <center><kbd>F</kbd></center>
+            <center><span class="sound">Clap2</span></center>
+        </div>
+        <div data-key="71" class="key"onclick="playS(71);">
+            <center><kbd>G</kbd></center>
+            <center><span class="sound">Drumb</span></center>
+        </div>
+        <div data-key="72" class="key"onclick="playS(72);">
+            <center><kbd>H</kbd></center>
+            <center><span class="sound">Drum</span></center>
+        </div>
+        <div data-key="74" class="key"onclick="playS(74);">
+            <center><kbd>J</kbd></center>
+            <center><span class="sound">Drum2</span></center>
+        </div>
+        <div data-key="75" class="key"onclick="playS(75);">
+            <center><kbd>K</kbd></center>
+            <center><span class="sound">Drum3</span></center>
+        </div>
+        <div data-key="76" class="key"onclick="playS(76);">
+            <center><kbd>L</kbd></center>
+            <center><span class="sound">Plate</span></center>
+        </div>
+    </div>
+
+    <audio data-key="65" src="bass.wav"></audio>
+    <audio data-key="83" src="bass2.wav"></audio>
+    <audio data-key="68" src="clap.wav"></audio>
+    <audio data-key="70" src="clap2.wav"></audio>
+    <audio data-key="71" src="drum b.wav"></audio>
+    <audio data-key="72" src="drum.wav"></audio>
+    <audio data-key="74" src="drum2.wav"></audio>
+    <audio data-key="75" src="drum3.wav"></audio>
+    <audio data-key="76" src="long_plate.wav"></audio>
+<script>
+    function playSound(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add('playing');
+    }
+    function removeTransition(e) {
+    
+        if (e.propertyName !== 'transform') return;
+        this.classList.remove('playing');
+    }
+    function playS(e) {
+        const audio = document.querySelector(`audio[data-key="${e}"]`);
+        const key = document.querySelector(`.key[data-key="${e}"]`);
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add('playing');
+    }
+    
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    
+    window.addEventListener('keydown', playSound);
+
+</script>    
+
+</body>
+</html>
